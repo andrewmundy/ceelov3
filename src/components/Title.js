@@ -7,7 +7,6 @@ class Title extends React.Component{
             <div className="title_text">
                 <img src={banner}/>
                 <h1>{this.props.title}</h1>
-                <h2>{this.props.subTitle}</h2>
             </div>
         )
     }
