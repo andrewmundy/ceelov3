@@ -6,11 +6,8 @@ const firebaseApp = firebase.initializeApp ({
         authDomain: "catch-of-the-day-56b87.firebaseapp.com",
         databaseURL: "https://catch-of-the-day-56b87.firebaseio.com",
 })
-
 const base = Rebase.createClass(firebaseApp.database());
-
 // This is a named export
 export {firebaseApp}
-
 // this is a default export
 export default base;

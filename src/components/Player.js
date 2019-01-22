@@ -11,17 +11,16 @@ class Players extends React.Component{
         }
         this.props.updatePlayer(this.props.index, updatedPlayer)
     }
-    
     render(){
         const details = this.props.details[this.props.index]
-        console.log(this.props.index === `player${this.props.turn+1}`)
+        // console.log(this.props.index === `player${this.props.turn+1}`)
         return ( 
             <div 
                 className="player" 
                 style={this.props.index === `player${this.props.turn+1}`? {opacity:1}:{opacity:1}}
             >
                 <span style={this.props.index === `player${this.props.turn+1}`? {opacity:1}:{display:'none'}}> ☞ </span>
-        {/*<span>{details.purse}</span>*/}
+                <span>{details.purse}</span>
                 <input name="name" type="text" value={details.name} onChange={this.handleChange}></input>
                 <div className="score">
                     <img src={require(`../images/dice${details.score}.png`)}/>
@@ -30,5 +29,4 @@ class Players extends React.Component{
         )
     }
 }
-
 export default Players

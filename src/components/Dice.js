@@ -11,7 +11,11 @@ class Dice extends React.Component{
             <div className="dices">
             {Object.keys(dice).map(key =>
                 <button onClick={this.props.roll}>
-                    <img alt={key} style={key === "d2" ? {transform:'rotate(90deg)'}: {transform: 'rotate(0deg)'}} className="dice" src={rolling ? isRolling : require(`../images/dice${dice[key] || 1}.png`)}/>
+                    <img 
+                        alt={key} 
+                        style={key === "d2" ? {transform:'rotate(90deg)'}: {transform: 'rotate(0deg)'}} 
+                        className="dice" src={rolling ? isRolling : require(`../images/dice${dice[key] || 1}.png`)}
+                    />
                 </button>
             )}
             </div>

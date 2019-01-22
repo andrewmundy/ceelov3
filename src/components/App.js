@@ -3,9 +3,11 @@ import '../App.scss';
 
 import Dice from './Dice'
 import GamePicker from './GamePicker'
+import Messenger from './Messenger'
 import Player from './Player'
 import Title from './Title'
 import icon from '../images/favicon.png'
+import AddNewPlayer from './AddNewPlayer'
 
 import base from '../base'
 
@@ -157,6 +159,32 @@ class App extends Component {
       players[key] = updatedPlayer
       this.setState({ceelo:{players}})
   }
+  
+  addNewPlayer = (change) => {
+    const players = {...this.state.ceelo.players}
+    let player = Object.keys(players).length+1
+    let key = `player${player}`
+    
+    if(change === 'plus'){
+      players[key] = {name:`player${player}`,score:0, purse:5}
+    }else{
+      // console.log(player-2)
+      if(player-2){
+        player = Object.keys(players).length
+        key = `player${player}`
+        players[key] = null
+      }else{
+
+      }
+      
+    }
+      // console.log(player)
+    this.setState({ceelo:{players}})
+
+    // this.setState({
+
+    // })
+  }
 
   render() {
     return (
@@ -184,8 +212,15 @@ class App extends Component {
               turn={this.state.ceelo.turn}
             />
           )}
+          <AddNewPlayer
+            players={Object.keys(this.state.ceelo.players).length}
+            addNewPlayer={this.addNewPlayer}
+          />
         </div>
-        {/* <GamePicker history={this.props.history} /> */}
+        {/* <GamePicker history={this.props.history} /> 
+        <Messenger />
+      
+        */}
       </div>
     );
   }
