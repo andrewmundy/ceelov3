@@ -178,7 +178,7 @@ class App extends Component {
         this.turn()
       }
       this.setState({ceelo:{rolling:false}})
-    }, 1)
+    }, 2200)
   }
 
   updatePlayer = (key, updatedPlayer) => {
