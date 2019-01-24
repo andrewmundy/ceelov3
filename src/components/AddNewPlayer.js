@@ -14,7 +14,6 @@ class AddNewPlayer extends React.Component{
     
     render(){
         let players = this.props.players
-        console.log(players)
         return ( 
             <div className="add_player">
                 <button name="plus" onClick={this.handleChange}>+</button>

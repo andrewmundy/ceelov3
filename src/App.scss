@@ -42,6 +42,33 @@ button{
   margin:3rem auto;
   padding:1px;
 
+  .title_page{
+    width:100%;
+    height:20px;
+    background:$title_gradient;
+    display:flex;
+    /* padding-left:2px; */
+    justify-content:space-between;
+    align-items: center;
+    .exit{
+      padding:0px;
+      width:18px;
+      height:18px;
+    }
+    .title_group{
+      display:flex;
+      justify-content: flex-start;
+      align-items: center;
+      .favicon{
+        width:16px;
+        padding-left:2px;
+      }
+      span{
+        color:$title_color;
+        padding-left:3px;
+      }
+    }
+  }
   .title{
     width:100%;
     height:20px;
@@ -50,7 +77,9 @@ button{
     /* padding-left:2px; */
     justify-content:flex-start;
     align-items: center;
-
+    .exit{
+      padding:1px;
+    }
     .favicon{
       width:16px;
       padding-left:2px;
@@ -119,6 +148,14 @@ button{
   }
   .game-selector{
     padding:5px;
+  }
+  .footer{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    button{
+      margin:3px
+    }
   }
 }
 

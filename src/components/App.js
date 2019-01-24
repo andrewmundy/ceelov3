@@ -8,6 +8,8 @@ import Player from './Player'
 import Title from './Title'
 import icon from '../images/favicon.png'
 import AddNewPlayer from './AddNewPlayer'
+import Footer from './Footer'
+
 
 import base from '../base'
 
@@ -23,18 +25,20 @@ class App extends Component {
       players: {}
     }
   }
+
   componentDidMount(){
     this.ref = base.syncState(`ceelo`, {
       context: this,
       state: 'ceelo'
     });
+
   }
 
   score = (d1,d2,d3) => {
     let result = 0
 
     if(JSON.stringify([d1,d2,d3].sort()) === "[1,2,3]"){
-      result = 123
+      result = -1
     }
     if(JSON.stringify([d1,d2,d3].sort()) === "[4,5,6]"){
       result = 456
@@ -42,7 +46,7 @@ class App extends Component {
    
     else if(d1 === d2){
       if(d1 === d3){
-        result = `trip ${d1}`
+        result = (d1*3)+4
       }
       result = d3
     }else if(d1 === d3){
@@ -62,47 +66,70 @@ class App extends Component {
     })
     return result
   }
-
+  checkTurn = () => {
+    const players = Object.keys(this.state.ceelo.players)
+  }
 
   turn = () => {
+    // turn needs to check if its the last player
     const players = Object.keys(this.state.ceelo.players)
     const length = players.length-1
     const turn = this.state.ceelo.turn
-    // turn needs to check if its the last player
-
+    
     if(length !== turn){
+      //if turn isnt the last player, than its next turn
       this.setState({ceelo:{turn:turn+1}})
     }else{
+      // if its the last player, reset
       this.setState({ceelo:{turn:0}})
       this.compareScore()
     }
-    //if it is the last player, restart
   }
   compareScore = () => {
     const players = Object.keys(this.state.ceelo.players)
     let winner = ""
+    let tied = []
 
     for(let i=0;i<players.length;i++){
       let player = this.state.ceelo.players[`player${i+1}`]
       if(!winner){
+        // if winner is empty, it is the first player, assign winner to first score
         winner = `player${i+1}`
+      }else if(player.score === this.state.ceelo.players[winner].score){
+        if(!tied[0]){
+          tied.push(this.state.ceelo.players[`player${i+1}`].name)
+          tied.push(this.state.ceelo.players[winner].name)
+        }else{
+          tied.push(this.state.ceelo.players[`player${i+1}`].name)
+        }
       }else if(player.score > this.state.ceelo.players[winner].score){
+        //if the next player score is greater than the last, replace winner and zero out tied
         winner = `player${i+1}`
+        tied = []
       }
     }
-    this.setState({
-      ceelo:{
-        title:`${this.state.ceelo.players[winner].name} wins!`,
-        zero:1
-      }
-    })
+    if(tied[0]){
+      this.setState({
+        ceelo:{
+          title:`${tied.join(", ")} tied!`,
+          zero:1
+        }
+      })
+      console.log(tied)
+    }else{
+      this.setState({
+        ceelo:{
+          title: `${this.state.ceelo.players[winner].name} wins with a ${this.state.ceelo.players[winner].score}!`,
+          zero:1
+        }
+      })
+    }
   }
 
   zeroOutScore = () => {
     const players = Object.keys(this.state.ceelo.players)
     for(let i=0;i<players.length;i++){
       let player = `player${i+1}`
-      console.log(player)
       this.setState({
         ceelo:{
           zero:0,
@@ -119,6 +146,7 @@ class App extends Component {
   roll = () => {
     //check if the score need to be zero'd out
     if(this.state.ceelo.zero){
+      // console.log('should zero out')
       this.zeroOutScore()
     }
     // if not, continue
@@ -138,6 +166,8 @@ class App extends Component {
       if(score){
         this.setState({
           ceelo:{
+            title:`${this.state.ceelo.players[`player${this.state.ceelo.turn+1}`].name} scored a ${score}`,
+            // subTitle:this.state.ceelo.players[`player${this.state.ceelo.turn+2}`].name ? `${this.state.ceelo.players[`player${this.state.ceelo.turn+2}`].name}'s turn` : `Last turn!`,
             players:{
               [`player${this.state.ceelo.turn+1}`]:{
                 score:score
@@ -148,7 +178,7 @@ class App extends Component {
         this.turn()
       }
       this.setState({ceelo:{rolling:false}})
-    }, 2000)
+    }, 1)
   }
 
   updatePlayer = (key, updatedPlayer) => {
@@ -174,15 +204,11 @@ class App extends Component {
         key = `player${player}`
         players[key] = null
       }else{
-
       }
-      
     }
       // console.log(player)
     this.setState({ceelo:{players}})
-
     // this.setState({
-
     // })
   }
 
@@ -221,6 +247,7 @@ class App extends Component {
         <Messenger />
       
         */}
+        <Footer />
       </div>
     );
   }
