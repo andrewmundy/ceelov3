@@ -25,19 +25,24 @@ class App extends Component {
     },
     isLoggedIn:false
   }
-
-  componentDidMount(){
+  componentWillMount(){
     let pathname = this.props.location.pathname
-
+    console.log(pathname)
+    
     if(pathname === "/"){
-      pathname = "/ceelo"
+      // console.log("/ceelo")
+      pathname = "ceelo"
       this.props.location.pathname = pathname
     }
-    
+  }
+  
+  componentDidMount(){
+  let pathname = this.props.location.pathname
     this.ref = base.syncState(pathname, {
       context: this,
       state: pathname
     });
+    
 
     firebase.auth().onAuthStateChanged(function(user) {
 
